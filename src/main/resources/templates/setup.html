@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Save Mnemonic</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<!-- Top menu -->
+<header class="top-menu">
+    <div class="menu-left">
+        <div th:replace="fragments/icons :: icon('Title','icon-sm')"></div>
+        TWallet Testnet
+    </div>
+</header>
+
+<!-- Center card -->
+<div class="content">
+    <div class="center-card">
+        <h2>
+            <div th:replace="fragments/icons :: icon('keyprivate','icon-sm')"></div>
+            Your New Mnemonic Phrase
+        </h2>
+        <p>Write down these 12 words in order. You will need them later.</p>
+        <code th:text="${mnemonic}">…</code>
+        <form th:action="@{/setup}" method="post">
+            <button class="btn-general" type="submit">
+
+                Enter Wallet
+            </button>
+        </form>
+        <form th:action="@{/setup}" method="get">
+            <button class="btn-general" type="submit">
+
+                Regenerate
+            </button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

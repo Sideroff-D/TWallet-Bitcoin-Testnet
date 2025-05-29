@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>TWallet Testnet</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<!-- Sticky top menu -->
+<header class="top-menu">
+    <div class="menu-left">
+        <div th:replace="~{fragments/icons :: icon('wallet','icon-sm')}"></div>
+        TWallet Testnet
+    </div>
+    <div class="menu-right">
+        <a href="/setup">
+            <div th:replace="~{fragments/icons :: icon('send','icon-sm')}"></div>
+            Generate
+        </a>
+        <a href="/restore">
+            <div th:replace="~{fragments/icons :: icon('restore','icon-sm')}"></div>
+            Restore
+        </a>
+    </div>
+</header>
+
+<!-- Main content -->
+<div class="content">
+
+    <div th:if="${message}" class="flash">
+        <span th:text="${message}"></span>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <!-- Wallet Info -->
+        <div class="wallet-info">
+            <h2>
+                <div th:replace="~{fragments/icons :: icon('balance','icon-sm')}"></div>
+                Balance
+            </h2>
+            <p>Current: <strong id="balance" th:text="${balance}">…</strong> sats</p>
+
+            <h2>
+                <div th:replace="~{fragments/icons :: icon('address','icon-sm')}"></div>
+                Address
+            </h2>
+            <div class="address-group">
+                <code id="address-code" th:text="${address}">…</code>
+                <button class="copy-btn">Copy</button>
+            </div>
+
+            <div class="qr-group">
+                <h2>
+                    <div th:replace="~{fragments/icons :: icon('qrcam','icon-sm')}"></div>
+                    QR Code
+                </h2>
+                <img th:src="@{/qr-code}" alt="QR Code"/>
+            </div>
+        </div>
+
+        <!-- Send Sats -->
+        <div class="card send-card">
+            <h2>
+                <div th:replace="~{fragments/icons :: icon('send','icon-sm')}"></div>
+                Send Sats
+            </h2>
+            <div class="send-info">
+                <p>Need testnet sats? Request from:</p>
+                <ul>
+                    <li><a href="https://bitcoinfaucet.uo1.net/" target="_blank">Bitcoin Testnet Faucet</a></li>
+                    <li><a href="https://testnet-faucet.com/"    target="_blank">Testnet Faucet</a></li>
+                </ul>
+            </div>
+            <form action="/send" method="post">
+                <input class="send-input" type="text" name="toAddress" placeholder="Recipient Address" required/>
+                <input class="send-input" type="number" name="amount" placeholder="Amount (sats)" required/>
+                <button class="send-btn" type="submit">Send</button>
+            </form>
+        </div>
+
+        <!-- Transactions -->
+        <div class="transactions">
+            <h2>
+                <div th:replace="~{fragments/icons :: icon('title','icon-sm')}"></div>
+                Transactions
+            </h2>
+            <ul class="tx-list">
+                <li th:each="tx : ${transactions}"
+                    th:classappend="${!tx.confirmed} ? ' pending' : (tx.incoming ? 'received' : 'sent')">
+
+                    <div class="tx-left">
+                        <div th:if="${tx.incoming}"
+                             th:replace="~{fragments/icons :: icon('receive','tx-icon')}"></div>
+                        <div th:if="${!tx.incoming}"
+                             th:replace="~{fragments/icons :: icon('send','tx-icon')}"></div>
+
+                        <div class="tx-info">
+                <span class="tx-label"
+                      th:text="${tx.incoming} ? 'Received' : 'Sent'"></span>
+                            <a th:href="@{'https://mempool.space/testnet/tx/' + ${tx.txid}}"
+                               target="_blank"
+                               class="tx-id-link"
+                               th:text="${tx.txid}">TXID</a>
+                        </div>
+                    </div>
+
+                    <div class="tx-right">
+              <span class="tx-amount"
+                    th:text="${tx.incoming} ? tx.change + ' TEST' : tx.sent + ' TEST'"></span>
+                        <span class="tx-fee" th:if="${!tx.incoming}"
+                              th:text="'Fee: ' + tx.fee + ' sats'"></span>
+                        <span class="tx-badge"
+                              th:text="${tx.confirmed} ? 'Standard' : 'Pending'"></span>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<script th:src="@{/js/update.js}"></script>
+</body>
+</html>

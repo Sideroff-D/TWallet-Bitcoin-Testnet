@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Restore Wallet</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<!-- Top menu -->
+<header class="top-menu">
+  <div class="menu-left">
+    <div th:replace="fragments/icons :: icon('Title','icon-sm')"></div>
+    TWallet Testnet
+  </div>
+
+</header>
+
+<!-- Center card -->
+<div class="content">
+  <div class="center-card">
+    <h2>
+      <div th:replace="fragments/icons :: icon('restore','icon-sm')"></div>
+      Restore from Mnemonic
+    </h2>
+    <form action="/restore" method="post">
+        <textarea class="send-input"
+                  name="mnemonic"
+                  placeholder="Enter your 12-word mnemonic"
+                  required></textarea>
+      <button class="btn-general" type="submit">Restore Wallet</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

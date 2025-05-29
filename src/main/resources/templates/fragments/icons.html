@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--
+  Usage:
+    <div th:replace="fragments/icons :: icon('send','icon-sm')" />
+  Renders:
+    <img src="/icons/send.svg" class="icon-sm" alt="send" />
+-->
+<th:block th:fragment="icon(name, cssClass)">
+  <img th:src="@{/icons/{n}.svg(n=${name})}"
+       th:class="${cssClass}"
+       th:alt="${name}" />
+</th:block>
+</body>
+</html>

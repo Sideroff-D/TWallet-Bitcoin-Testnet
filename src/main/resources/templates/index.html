@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Welcome to TWallet</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+
+
+<!-- Center-card content -->
+<div class="content">
+  <div class="center-card">
+    <h1>
+      <div th:replace="~{fragments/icons :: icon('wallet','icon-sm')}"></div>
+      TWallet Testnet
+    </h1>
+    <p>What would you like to do?</p>
+    <form action="/setup" method="get">
+      <button class="btn-general" type="submit">
+        <div th:replace="~{fragments/icons :: icon('send','icon-sm')}"></div>
+        Create New Wallet
+      </button>
+    </form>
+    <form action="/restore" method="get">
+      <button class="btn-general" type="submit">
+        <div th:replace="~{fragments/icons :: icon('restore','icon-sm')}"></div>
+        Restore Wallet
+      </button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
